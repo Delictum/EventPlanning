@@ -220,6 +220,8 @@
     </Compile>
     <Compile Include="Jobs\EmailSender.cs" />
     <Compile Include="Jobs\EmailScheduler.cs" />
+    <Compile Include="Jobs\UpdateEvents.cs" />
+    <Compile Include="Jobs\UpdateEventsScheduler.cs" />
     <Compile Include="Migrations\201901152043421_MigrateDB.cs" />
     <Compile Include="Migrations\201901152043421_MigrateDB.Designer.cs">
       <DependentUpon>201901152043421_MigrateDB.cs</DependentUpon>

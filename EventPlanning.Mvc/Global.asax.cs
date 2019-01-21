@@ -14,7 +14,8 @@ namespace EventPlanning.Mvc
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            EmailScheduler.Start();
+            UpdateEventsScheduler.Start();
+            //EmailScheduler.Start();
         }
     }
 }
