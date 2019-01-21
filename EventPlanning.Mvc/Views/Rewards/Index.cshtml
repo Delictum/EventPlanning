@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EventPlanning.Mvc.Models.Entities.Reward>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AwardName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AwardName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RewardId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RewardId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RewardId })
+        </td>
+    </tr>
+}
+
+</table>

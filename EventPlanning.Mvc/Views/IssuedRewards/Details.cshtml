@@ -1,0 +1,50 @@
+﻿@model EventPlanning.Mvc.Models.Entities.IssuedReward
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>IssuedReward</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.AspNetUsersId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.AspNetUsersId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventReward.EventRewardId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventReward.EventRewardId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemunerationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RemunerationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountRewardIssued)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountRewardIssued)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IssuedRewardId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

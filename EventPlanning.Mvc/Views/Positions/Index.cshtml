@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EventPlanning.Mvc.Models.Entities.Position>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.JobTitle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PositionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PositionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PositionId })
+        </td>
+    </tr>
+}
+
+</table>

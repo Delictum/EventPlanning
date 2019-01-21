@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EventPlanning" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="EventPlanningContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="EventPlanning.User" />
+    <EntitySet Name="FullNames" EntityType="EventPlanning.FullName" />
+    <EntitySet Name="Positions" EntityType="EventPlanning.Position" />
+    <EntitySet Name="Groups" EntityType="EventPlanning.Group" />
+    <EntitySet Name="Employees" EntityType="EventPlanning.Employee" />
+    <AssociationSet Name="FullNameEmployee" Association="EventPlanning.FullNameEmployee">
+      <End Role="FullName" EntitySet="FullNames" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="PositionEmployee" Association="EventPlanning.PositionEmployee">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="GroupEmployee" Association="EventPlanning.GroupEmployee">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FullName">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="SureName" Type="String" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="EventPlanning.FullNameEmployee" FromRole="FullName" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="EventPlanning.PositionEmployee" FromRole="Position" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="EventPlanning.GroupEmployee" FromRole="Group" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="FullName" Relationship="EventPlanning.FullNameEmployee" FromRole="Employee" ToRole="FullName" />
+    <Property Name="FullNameId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Position" Relationship="EventPlanning.PositionEmployee" FromRole="Employee" ToRole="Position" />
+    <Property Name="PositionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Group" Relationship="EventPlanning.GroupEmployee" FromRole="Employee" ToRole="Group" />
+    <Property Name="GroupId" Type="Int32" Nullable="false" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" />
+    <Property Name="Male" Type="Boolean" Nullable="false" />
+    <Property Name="Adress" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="FullNameEmployee">
+    <End Type="EventPlanning.FullName" Role="FullName" Multiplicity="1" />
+    <End Type="EventPlanning.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FullName">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="FullNameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PositionEmployee">
+    <End Type="EventPlanning.Position" Role="Position" Multiplicity="1" />
+    <End Type="EventPlanning.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupEmployee">
+    <End Type="EventPlanning.Group" Role="Group" Multiplicity="1" />
+    <End Type="EventPlanning.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

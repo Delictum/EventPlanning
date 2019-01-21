@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventPlanning.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="EventPlanningStoreContainer">
+    <EntitySet Name="Users" EntityType="EventPlanning.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FullNames" EntityType="EventPlanning.Store.FullNames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Positions" EntityType="EventPlanning.Store.Positions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Groups" EntityType="EventPlanning.Store.Groups" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Employees" EntityType="EventPlanning.Store.Employees" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FullNameEmployee" Association="EventPlanning.Store.FullNameEmployee">
+      <End Role="FullName" EntitySet="FullNames" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="PositionEmployee" Association="EventPlanning.Store.PositionEmployee">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="GroupEmployee" Association="EventPlanning.Store.GroupEmployee">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FullNames">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SureName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Positions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullNameId" Type="int" Nullable="false" />
+    <Property Name="PositionId" Type="int" Nullable="false" />
+    <Property Name="GroupId" Type="int" Nullable="false" />
+    <Property Name="Birthday" Type="datetime" Nullable="false" />
+    <Property Name="Male" Type="bit" Nullable="false" />
+    <Property Name="Adress" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FullNameEmployee">
+    <End Role="FullName" Type="EventPlanning.Store.FullNames" Multiplicity="1" />
+    <End Role="Employee" Type="EventPlanning.Store.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FullName">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="FullNameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PositionEmployee">
+    <End Role="Position" Type="EventPlanning.Store.Positions" Multiplicity="1" />
+    <End Role="Employee" Type="EventPlanning.Store.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupEmployee">
+    <End Role="Group" Type="EventPlanning.Store.Groups" Multiplicity="1" />
+    <End Role="Employee" Type="EventPlanning.Store.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

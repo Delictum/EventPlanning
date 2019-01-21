@@ -1,0 +1,161 @@
+﻿@model EventPlanning.Mvc.Models.Entities.Event
+
+@{
+    ViewBag.Title = Model.EventTitle;
+}
+
+<h2>@Model.EventTitle</h2>
+
+@if (Model.EventVisible || User.IsInRole("admin"))
+{
+    <div>
+
+        <div class="row">
+            <div class="col-md-10">
+                <h6>@Model.EventDate (@Model.RepeatEventType)</h6>
+            </div>
+
+            @if (User.IsInRole("admin"))
+            {
+                <div class="col-md-2">
+                    <a href="@Url.RouteUrl("Default", new {controller = "Events", action = string.Join(string.Empty, "ExportExcel/" + Model.EventId)})">Download excel</a>
+                </div>
+            }
+        </div>
+
+        <div>
+            <h6><em>@ViewBag.Message</em></h6>
+        </div>
+
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                @{
+                    var base64 = Convert.ToBase64String(Model.EventImage);
+                    var imgSrc = $"data:image/gif;base64,{base64}";
+                }
+                <img src="@imgSrc" alt="Error image" height="400" , width="350"/>
+            </div>
+
+            <div class="col-md-6">
+                <p>
+                    @Model.EventDescription
+                </p>
+
+                <br/>
+
+                @if (ViewBag.Rewards.Count > 0)
+                {
+                    <p>Rewards:</p>
+                    <ul title="Rewards:">
+                        @foreach (var reward in ViewBag.Rewards)
+                        {
+                            <li>
+                                @reward.AwardName
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div style="padding-bottom: 30px">
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                @Html.HiddenFor(model => model.EventId)
+                <div class="form-group" align="center">
+                    <div class="col-md-offset-2 col-md-10">
+                        @if (ViewBag.SignUp)
+                        {
+                            if (!ViewBag.Message.Contains("Unable to unsubscribe after recording!"))
+                            {
+                                <input type="submit" value="Unsubscribe" class="btn btn-default"/>
+                            }
+                        }
+                        else
+                        {
+                            <input type="submit" value="Sign up" class="btn btn-default" id="submitSignUp"/>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @if (User.IsInRole("admin"))
+        {
+            <table class="table" style="padding: 10px">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Employees.FirstOrDefault().FullName.LastName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Employees.FirstOrDefault().FullName.FirstName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Employees.FirstOrDefault().FullName.SureName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Employees.FirstOrDefault().Group.GroupName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Employees.FirstOrDefault().Position.JobTitle)
+                    </th>
+
+                </tr>
+
+                @foreach (var employee in Model.Employees)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => employee.FullName.LastName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => employee.FullName.FirstName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => employee.FullName.SureName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => employee.Group.GroupName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => employee.Position.JobTitle)
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+}
+else
+{
+    <div>
+        <h3><em>The event is temporarily unavailable.</em></h3>
+    </div>
+}
+
+@if (User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

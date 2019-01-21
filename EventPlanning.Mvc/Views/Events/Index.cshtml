@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EventPlanning.Mvc.Models.Entities.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EventTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RepeatEventType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    if (item.EventVisible == false && !User.IsInRole("admin"))
+    {
+        continue;
+    }
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RepeatEventType)
+        </td>
+        @if (User.IsInRole("admin"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.EventId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.EventId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.EventId})
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.EventId })
+            </td>
+        }
+    </tr>
+}
+
+</table>
