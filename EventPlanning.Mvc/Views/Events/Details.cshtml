@@ -4,7 +4,7 @@
     ViewBag.Title = Model.EventTitle;
 }
 
-<h2>@Model.EventTitle</h2>
+<h2>@Model.EventTitle (@Model.EventCategory)</h2>
 
 @if (Model.EventVisible || User.IsInRole("admin"))
 {
@@ -31,10 +31,18 @@
         <div class="row">
             <div class="col-md-6">
                 @{
-                    var base64 = Convert.ToBase64String(Model.EventImage);
-                    var imgSrc = $"data:image/gif;base64,{base64}";
+                    try
+                    {
+                        var base64 = Convert.ToBase64String(Model.EventImage);
+                        var imgSrc = $"data:image/gif;base64,{base64}";
+                        <img src="@imgSrc" alt="Error image" height="400" , width="350" />
+                    }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
                 }
-                <img src="@imgSrc" alt="Error image" height="400" , width="350"/>
+
             </div>
 
             <div class="col-md-6">
@@ -42,7 +50,26 @@
                     @Model.EventDescription
                 </p>
 
-                <br/>
+
+                @if (Model.SplitNumberGroups != 0)
+                {
+                    <br />
+
+                    <p>
+                        Number of groups: @Model.SplitNumberGroups
+                    </p>
+                }
+                else if (Model.SplitNumberParticipants != 0)
+                {
+                    <br />
+
+                    <p>
+                        Number of participants in the group: @Model.SplitNumberParticipants
+                    </p>
+                }
+
+
+                <br />
 
                 @if (ViewBag.Rewards.Count > 0)
                 {
@@ -55,6 +82,40 @@
                             </li>
                         }
                     </ul>
+                }
+                
+                @if (Model.MaximumNumberParticipants != 0)
+                {
+                    <p>
+                        <em>
+                            Maximum number of participants: @Model.MaximumNumberParticipants
+                            Remaining seats: @(Model.MaximumNumberParticipants - ViewBag.CurrentAmountParticipants)
+                        </em>
+                    </p>
+                }
+                @if (User.IsInRole("admin") && Model.EventTitle.ToUpper().Contains("ПОХОД"))
+                {
+                    <p>
+                        В поход понадобятся 4-местные палатки в количестве: @(ViewBag.CurrentAmountParticipants / 4 + 1).
+                        <ul>
+                            Еды в день:
+                            <li>
+                                макарнные изделия - @(ViewBag.CurrentAmountParticipants * 0.3) кг.;
+                            </li>
+                            <li>
+                                тушонка -  @ViewBag.CurrentAmountParticipants шт.;
+                            </li>
+                            <li>
+                                вода -  @(ViewBag.CurrentAmountParticipants * 2) л.;
+                            </li>
+                            <li>
+                                шашлык - @(ViewBag.CurrentAmountParticipants * 0.25) кг.;
+                            </li>
+                            <li>
+                                овощи - @(ViewBag.CurrentAmountParticipants * 0.2) кг.;
+                            </li>
+                        </ul>
+                    </p>
                 }
             </div>
         </div>

@@ -141,3 +141,6 @@ C:\Users\thedr\source\repos\EventPlanning\EventPlanning.Mvc\bin\Microsoft.Identi
 C:\Users\thedr\source\repos\EventPlanning\EventPlanning.Mvc\bin\Quartz.pdb
 C:\Users\thedr\source\repos\EventPlanning\EventPlanning.Mvc\bin\Quartz.xml
 C:\Users\thedr\source\repos\EventPlanning\EventPlanning.Mvc\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\thedr\source\repos\EventPlanning\EventPlanning.Mvc\obj\Debug\EventPlanning.Mvc.Migrations.ChangeEvent.resources
+C:\Users\thedr\source\repos\EventPlanning\EventPlanning.Mvc\obj\Debug\EventPlanning.Mvc.Migrations.AddMaxparticipantsinevents.resources
+C:\Users\thedr\source\repos\EventPlanning\EventPlanning.Mvc\bin\System.IO.FileSystem.Primitives.dll

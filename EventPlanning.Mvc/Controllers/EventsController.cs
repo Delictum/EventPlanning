@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using EventPlanning.Mvc.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -37,9 +38,68 @@ namespace EventPlanning.Mvc.Controllers
         }
 
         // GET: Events
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string category)
         {
-            return View(db.Events.ToList());
+            if (string.IsNullOrEmpty(category))
+            {
+                var retCategoryQuery = from c in db.Events
+                    orderby c.EventCategory.ToString()
+                    select c.EventCategory.ToString();
+
+
+                ViewBag.Category = new SelectList(retCategoryQuery);
+
+                return View(db.Events.ToList());
+            }
+
+            ViewBag.CurrentFilter = category;
+
+            var categoryQuery = from c in db.Events
+                                orderby c.EventCategory.ToString()
+                                select c.EventCategory.ToString();
+
+
+            ViewBag.Category = new SelectList(categoryQuery);
+
+
+            var events = from i in db.Events
+                              select i;
+
+
+            if (!string.IsNullOrEmpty(categoryQuery.ToString()))
+            {
+                events = events.Where(i => i.EventCategory.ToString() == category);
+            }
+
+
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CostSortParm = sortOrder == "cost" ? "cost_desc" : "cost";
+            ViewBag.CategorySortParm = sortOrder == "category" ? "category_desc" : "category";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    events = events.OrderByDescending(i => i.EventTitle);
+                    break;
+                case "category":
+                    events = events.OrderBy(i => i.EventCategory);
+                    break;
+                case "category_desc":
+                    events = events.OrderByDescending(i => i.EventCategory);
+                    break;
+                case "cost":
+                    events = events.OrderBy(i => i.EventDate);
+                    break;
+                case "cost_desc":
+                    events = events.OrderByDescending(i => i.EventDate);
+                    break;
+                default:
+                    events = events.OrderBy(i => i.EventTitle);
+                    break;
+            }
+
+            return View(events);
         }
 
         // GET: Events/Details/5
@@ -57,11 +117,13 @@ namespace EventPlanning.Mvc.Controllers
                 return HttpNotFound();
             }
 
+            int currentAmountParticipants = 0;
             foreach (var employee in @event.Employees)
             {
                 employee.FullName = db.FullNames.First(x => x.FullNameId == employee.FullNameId);
                 employee.Position = db.Positions.First(x => x.PositionId == employee.PositionId);
                 employee.Group = db.Groups.First(x => x.GroupId == employee.GroupId);
+                currentAmountParticipants++;
             }
 
             var currentUserId = User.Identity.GetUserId();
@@ -85,6 +147,7 @@ namespace EventPlanning.Mvc.Controllers
 
             ViewBag.Message = (abilityToUnsubscribe) ? "" : "Unable to unsubscribe after recording!";
             ViewBag.Rewards = rewards;
+            ViewBag.CurrentAmountParticipants = currentAmountParticipants;
 
             return View(@event);
         }

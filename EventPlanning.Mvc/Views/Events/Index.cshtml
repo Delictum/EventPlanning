@@ -9,6 +9,25 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Events", FormMethod.Get))
+{
+
+    <p>
+
+        @Html.DropDownList("Category", (SelectList)ViewBag.Category, "All", new { @class = "form-control"})
+        <input type="submit" value="Filter" />
+    </p>
+
+    <p>
+        Sort by: @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        | @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.CategorySortParm, currentFilter = ViewBag.CurrentFilter })
+        | @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.CostSortParm, currentFilter = ViewBag.CurrentFilter })
+
+    </p>
+
+}
+
 <table class="table">
     <tr>
         <th>

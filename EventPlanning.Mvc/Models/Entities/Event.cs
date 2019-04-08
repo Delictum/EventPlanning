@@ -18,6 +18,11 @@ namespace EventPlanning.Mvc.Models.Entities
         public byte[] EventImage { get; set; }
         public bool EventVisible { get; set; }
 
+        public EventCategory EventCategory { get; set; }
+        public int SplitNumberGroups { get; set; }
+        public int SplitNumberParticipants { get; set; }
+        public int MaximumNumberParticipants { get; set; }
+
         public virtual ICollection<Employee> Employees { get; set; }
         public Event()
         {
