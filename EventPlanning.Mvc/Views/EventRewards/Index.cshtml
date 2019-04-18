@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<EventPlanning.Mvc.Models.Entities.EventReward>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Награды мероприятий";
 }
 
-<h2>Index</h2>
+<h2>Награды мероприятий</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создание новой награды к мероприятию", "Create")
 </p>
 <table class="table">
     <tr>
@@ -35,9 +35,9 @@
             @Html.DisplayFor(modelItem => item.AmountRewards)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EventRewardId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EventRewardId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EventRewardId })
+            @Html.ActionLink("Редактирование", "Edit", new { id=item.EventRewardId }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.EventRewardId }) |
+            @Html.ActionLink("Удаление", "Delete", new { id=item.EventRewardId })
         </td>
     </tr>
 }

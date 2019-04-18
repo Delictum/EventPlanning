@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<EventPlanning.Mvc.Models.Entities.Group>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Отделы";
 }
 
-<h2>Index</h2>
+<h2>Отделы</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать новый отдел", "Create")
 </p>
 <table class="table">
     <tr>
@@ -23,9 +23,9 @@
             @Html.DisplayFor(modelItem => item.GroupName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.GroupId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.GroupId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.GroupId })
+            @Html.ActionLink("Редактирование", "Edit", new { id=item.GroupId }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.GroupId }) |
+            @Html.ActionLink("Удаление", "Delete", new { id=item.GroupId })
         </td>
     </tr>
 }

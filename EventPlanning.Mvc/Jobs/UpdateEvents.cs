@@ -22,30 +22,30 @@ namespace EventPlanning.Mvc.Jobs
                     DateTime newDateTime;
                     switch (@event.RepeatEventType)
                     {
-                        case RepeatEventType.OneTime:
+                        case RepeatEventType.Разовое:
                         {
                             @event.EventVisible = false;
                             break;
                         }
-                        case RepeatEventType.Daily:
+                        case RepeatEventType.Ежедневное:
                         {
                             newDateTime = @event.EventDate.AddDays(1);
                             @event.EventDate = newDateTime;
                             break;
                         }
-                        case RepeatEventType.Weekly:
+                        case RepeatEventType.Еженедельное:
                         {
                             newDateTime = @event.EventDate.AddDays(7);
                             @event.EventDate = newDateTime;
                             break;
                         }
-                        case RepeatEventType.Monthly:
+                        case RepeatEventType.Ежемесячное:
                         {
                             newDateTime = @event.EventDate.AddMonths(1);
                             @event.EventDate = newDateTime;
                             break;
                         }
-                        case RepeatEventType.Annual:
+                        case RepeatEventType.Ежегодное:
                         {
                             newDateTime = @event.EventDate.AddYears(1);
                             @event.EventDate = newDateTime;
@@ -59,7 +59,7 @@ namespace EventPlanning.Mvc.Jobs
                     db.Entry(@event).State = EntityState.Modified;
                 }
 
-                events = await db.Events.Where(e => e.EventDate > DateTime.Now && e.RepeatEventType == RepeatEventType.Annual).ToListAsync();
+                events = await db.Events.Where(e => e.EventDate > DateTime.Now && e.RepeatEventType == RepeatEventType.Ежегодное).ToListAsync();
 
                 foreach (var @event in events)
                 {

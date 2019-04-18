@@ -22,12 +22,12 @@ namespace EventPlanning.Mvc.Jobs
             var events = new EventPlanningContext().Events.Where(e => e.EventVisible).ToList();
             var currentEvents = new StringBuilder();
 
-            currentEvents.Append("Current events are currently available:\n");
+            currentEvents.Append("В настоящее время доступны текущие события:\n");
             foreach (var @event in events)
             {
                 currentEvents.Append(@event.EventTitle).Append(" (").Append(@event.EventDate).Append(");\n");
             }
-            currentEvents.Append("Sign up and participate!\nRespectfully, Event planning!");
+            currentEvents.Append("Зарегистрируйся и участвуй!\nС уважением, Event planning!");
 
             var users = new ApplicationDbContext().Users.ToList();
 

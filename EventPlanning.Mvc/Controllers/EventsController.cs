@@ -73,7 +73,7 @@ namespace EventPlanning.Mvc.Controllers
 
 
 
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.CostSortParm = sortOrder == "cost" ? "cost_desc" : "cost";
             ViewBag.CategorySortParm = sortOrder == "category" ? "category_desc" : "category";
 
@@ -145,7 +145,7 @@ namespace EventPlanning.Mvc.Controllers
                 }
             }
 
-            ViewBag.Message = (abilityToUnsubscribe) ? "" : "Unable to unsubscribe after recording!";
+            ViewBag.Message = (abilityToUnsubscribe) ? "" : "Невозможно отписаться после записи!";
             ViewBag.Rewards = rewards;
             ViewBag.CurrentAmountParticipants = currentAmountParticipants;
 
@@ -178,7 +178,7 @@ namespace EventPlanning.Mvc.Controllers
                         listEventRewards[i] = dbEventReward.Set<EventReward>().Find(listEventRewards[i].EventRewardId);
                         double writeOffInQuantity;
 
-                        if (@event.EventTitle.Contains("Children's New Year's gifts"))
+                        if (@event.EventTitle.Contains("Детские новогодние подарки"))
                         {
                             writeOffInQuantity = currentEmployee.AmountChildren;
                             if (listEventRewards[i].AmountRewards >= writeOffInQuantity)
@@ -199,7 +199,7 @@ namespace EventPlanning.Mvc.Controllers
                             }
                             else
                             {
-                                ViewBag.Message = "Not enough in stock.";
+                                ViewBag.Message = "Недостаточно в наличии.";
                                 return RedirectToAction("Details", @event.EventId);
                             }
                         }
@@ -224,7 +224,7 @@ namespace EventPlanning.Mvc.Controllers
                             }
                             else
                             {
-                                ViewBag.Message = "Not enough in stock.";
+                                ViewBag.Message = "Недостаточно в наличии.";
                                 return RedirectToAction("Details", @event.EventId);
                             }
                         }
@@ -249,7 +249,7 @@ namespace EventPlanning.Mvc.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "This event does not provide for cancellation of the application.";
+                    ViewBag.Message = "Это событие не предусматривает отмену заявки.";
                     return RedirectToAction("Details", @event.EventId);
                 }
             }
@@ -260,17 +260,18 @@ namespace EventPlanning.Mvc.Controllers
             return RedirectToAction("Details", @event.EventId);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult ExportExcel(int? id)
         {
             using (var workbook = new XLWorkbook(XLEventTracking.Disabled))
             {
-                var worksheet = workbook.Worksheets.Add("Event staff");
+                var worksheet = workbook.Worksheets.Add("Сотрудники мероприятия");
 
-                worksheet.Cell("A1").Value = "Last name";
-                worksheet.Cell("B1").Value = "First name";
-                worksheet.Cell("C1").Value = "Sure name";
-                worksheet.Cell("D1").Value = "Group name";
-                worksheet.Cell("E1").Value = "Position name";
+                worksheet.Cell("A1").Value = "Фамилия";
+                worksheet.Cell("B1").Value = "Имя";
+                worksheet.Cell("C1").Value = "Отчество";
+                worksheet.Cell("D1").Value = "Отдел";
+                worksheet.Cell("E1").Value = "Должность";
                 worksheet.Row(1).Style.Font.Bold = true;
                 for (var i = 1; i < CountColumnExcel; i++)
                 {

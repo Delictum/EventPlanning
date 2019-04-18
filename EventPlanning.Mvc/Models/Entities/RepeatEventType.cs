@@ -2,10 +2,10 @@
 {
     public enum RepeatEventType
     {
-        OneTime,
-        Daily,
-        Weekly,
-        Monthly,
-        Annual,
+        Разовое,
+        Ежедневное,
+        Еженедельное,
+        Ежемесячное,
+        Ежегодное,
     }
 }

@@ -2,10 +2,10 @@
 @model Event
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактирование";
 }
 
-<h2>Edit</h2>
+<h2>Редактирование</h2>
 
 
 @using (Html.BeginForm("Edit", "Events", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Event</h4>
+    <h4>Мероприятие</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.EventId)
@@ -91,9 +91,9 @@
     </div>
 
     <div style="position: relative;">
-        <label>Image</label>
+        <label>Изображение</label>
         <a class='btn' href='javascript:;'>
-            Choose file...
+            Выберите файл...
             <input type="file" name="upimage" size="40"
                    style="position: absolute; z-index: 2; top: 0; left: 0; filter: alpha(opacity=0); opacity: 0; background-color: transparent; color: transparent;"
                    onchange='$("#upload-file-info").html($(this).val());'>
@@ -103,14 +103,14 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Сохранить" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Назад к списку", "Index")
 </div>
 
 @section Scripts {

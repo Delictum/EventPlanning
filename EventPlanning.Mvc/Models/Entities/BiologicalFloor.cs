@@ -2,7 +2,7 @@
 {
     public enum BiologicalFloor
     {
-        Male,
-        Female
+        Мужской,
+        Женский
     }
 }

@@ -107,7 +107,7 @@ namespace EventPlanning.Mvc.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Неверная попытка входа.");
                     return View(model);
             }
         }
@@ -150,7 +150,7 @@ namespace EventPlanning.Mvc.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", "Неверный код.");
                     return View(model);
             }
         }
@@ -208,9 +208,9 @@ namespace EventPlanning.Mvc.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
                     protocol: Request.Url.Scheme);
                 // отправка письма
-                await UserManager.SendEmailAsync(user.Id, "Email Verification",
-                    "To complete registration, follow the link: <a href=\""
-                    + callbackUrl + "\">complete registration</a>");
+                await UserManager.SendEmailAsync(user.Id, "Email верификация",
+                    "Для завершения регистрации, перейдите по ссылке: <a href=\""
+                    + callbackUrl + "\">завершить регистрацию</a>");
                 return View("DisplayEmail");
             }
             AddErrors(result);

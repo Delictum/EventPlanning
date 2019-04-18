@@ -1,4 +1,5 @@
-﻿@model EventPlanning.Mvc.Models.Entities.Event
+﻿@using EventPlanning.Mvc.Models.Entities
+@model EventPlanning.Mvc.Models.Entities.Event
 
 @{
     ViewBag.Title = Model.EventTitle;
@@ -18,7 +19,7 @@
             @if (User.IsInRole("admin"))
             {
                 <div class="col-md-2">
-                    <a href="@Url.RouteUrl("Default", new {controller = "Events", action = string.Join(string.Empty, "ExportExcel/" + Model.EventId)})">Download excel</a>
+                    <a href="@Url.RouteUrl("Default", new {controller = "Events", action = string.Join(string.Empty, "ExportExcel/" + Model.EventId)})">Скачать excel</a>
                 </div>
             }
         </div>
@@ -35,7 +36,7 @@
                     {
                         var base64 = Convert.ToBase64String(Model.EventImage);
                         var imgSrc = $"data:image/gif;base64,{base64}";
-                        <img src="@imgSrc" alt="Error image" height="400" , width="350" />
+                        <img src="@imgSrc" alt="Ошибка загрузки изображения" height="400" , width="350" />
                     }
                     catch (Exception)
                     {
@@ -56,7 +57,7 @@
                     <br />
 
                     <p>
-                        Number of groups: @Model.SplitNumberGroups
+                        Количество групп: @Model.SplitNumberGroups
                     </p>
                 }
                 else if (Model.SplitNumberParticipants != 0)
@@ -64,7 +65,7 @@
                     <br />
 
                     <p>
-                        Number of participants in the group: @Model.SplitNumberParticipants
+                        Количество участников в группе: @Model.SplitNumberParticipants
                     </p>
                 }
 
@@ -73,7 +74,7 @@
 
                 @if (ViewBag.Rewards.Count > 0)
                 {
-                    <p>Rewards:</p>
+                    <p>Награды:</p>
                     <ul title="Rewards:">
                         @foreach (var reward in ViewBag.Rewards)
                         {
@@ -88,12 +89,12 @@
                 {
                     <p>
                         <em>
-                            Maximum number of participants: @Model.MaximumNumberParticipants
-                            Remaining seats: @(Model.MaximumNumberParticipants - ViewBag.CurrentAmountParticipants)
+                            Максимальное количество участников: @Model.MaximumNumberParticipants
+                            Оставшиеся места: @(Model.MaximumNumberParticipants - ViewBag.CurrentAmountParticipants)
                         </em>
                     </p>
                 }
-                @if (User.IsInRole("admin") && Model.EventTitle.ToUpper().Contains("ПОХОД"))
+                @if (User.IsInRole("admin") && Model.EventCategory == EventCategory.Поход)
                 {
                     <p>
                         В поход понадобятся 4-местные палатки в количестве: @(ViewBag.CurrentAmountParticipants / 4 + 1).
@@ -103,7 +104,7 @@
                                 макарнные изделия - @(ViewBag.CurrentAmountParticipants * 0.3) кг.;
                             </li>
                             <li>
-                                тушонка -  @ViewBag.CurrentAmountParticipants шт.;
+                                тушенка -  @ViewBag.CurrentAmountParticipants шт.;
                             </li>
                             <li>
                                 вода -  @(ViewBag.CurrentAmountParticipants * 2) л.;
@@ -133,12 +134,12 @@
                         {
                             if (!ViewBag.Message.Contains("Unable to unsubscribe after recording!"))
                             {
-                                <input type="submit" value="Unsubscribe" class="btn btn-default"/>
+                                <input type="submit" value="Отписаться" class="btn btn-default"/>
                             }
                         }
                         else
                         {
-                            <input type="submit" value="Sign up" class="btn btn-default" id="submitSignUp"/>
+                            <input type="submit" value="Подписаться" class="btn btn-default" id="submitSignUp"/>
                         }
                     </div>
                 </div>
@@ -203,20 +204,20 @@
 else
 {
     <div>
-        <h3><em>The event is temporarily unavailable.</em></h3>
+        <h3><em>Событие временно недоступно.</em></h3>
     </div>
 }
 
 @if (User.IsInRole("admin"))
 {
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Редактирование", "Edit", new { id = Model.EventId }) |
+        @Html.ActionLink("Назад к списку", "Index")
     </p>
 }
 else
 {
     <p>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Назад к списку", "Index")
     </p>
 }

@@ -2,9 +2,9 @@
 {
     public enum EventCategory
     {
-        Corporate,
-        Hike,
-        Subscription,
-        Wellness,
+        Корпоратив,
+        Поход,
+        Абонемент,
+        Оздоровительное,
     }
 }

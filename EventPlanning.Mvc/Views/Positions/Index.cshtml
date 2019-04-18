@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<EventPlanning.Mvc.Models.Entities.Position>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Должности";
 }
 
-<h2>Index</h2>
+<h2>Должности</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать новую должность", "Create")
 </p>
 <table class="table">
     <tr>
@@ -23,9 +23,9 @@
             @Html.DisplayFor(modelItem => item.JobTitle)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PositionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PositionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PositionId })
+            @Html.ActionLink("Редактирование", "Edit", new { id=item.PositionId }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.PositionId }) |
+            @Html.ActionLink("Удаление", "Delete", new { id=item.PositionId })
         </td>
     </tr>
 }

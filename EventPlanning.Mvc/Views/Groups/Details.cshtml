@@ -1,13 +1,13 @@
 ﻿@model EventPlanning.Mvc.Models.Entities.Group
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Подробнее";
 }
 
-<h2>Details</h2>
+<h2>Подробнее</h2>
 
 <div>
-    <h4>Group</h4>
+    <h4>Отдел</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,6 +21,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.GroupId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактирование", "Edit", new { id = Model.GroupId }) |
+    @Html.ActionLink("Назад к списку", "Index")
 </p>

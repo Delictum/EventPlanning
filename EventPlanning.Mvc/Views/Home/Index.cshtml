@@ -4,60 +4,83 @@
 
 <div class="jumbotron">
     <h1>Event planning</h1>
-    <p class="lead">On this site you can register for the proposed events.</p>
-    <p><a href="../Home/About" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p class="lead">На этом сайте вы можете зарегистрироваться для предлагаемых мероприятий.</p>
+    <p><a href="../Home/About" class="btn btn-primary btn-lg">Узнать больше &raquo;</a></p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Начиная</h2>
         <p>
-            To get started, go to the registration site.
+            Для начала перейдите к регистрации.
         </p>
-        <p><a class="btn btn-default" href="../Account/Register">Register &raquo;</a></p>
+        <p><a class="btn btn-default" href="../Account/Register">Регистрация &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more information</h2>
-        <p>Go to the "About" page or view the event description to learn more!</p>
-        <p><a class="btn btn-default" href="About">Learn more &raquo;</a></p>
+        <h2>Получить больше информации</h2>
+        <p>Перейдите на страницу «О нас» или просмотрите описание события, чтобы узнать больше!</p>
+        <p><a class="btn btn-default" href="../Home/About">Узнать больше &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>What now?</h2>
-        <p>Sign up, participate, have fun and call your friends! :)</p>
-        <p><a class="btn btn-default" href="../Events/Index">Forward &raquo;</a></p>
+        <h2>Что теперь?</h2>
+        <p>Зарегистрируйтесь, участвуйте, веселитесь и приглашайте своих коллег! :)</p>
+        <p><a class="btn btn-default" href="../Events/Index">Вперед &raquo;</a></p>
     </div>
 </div>
 
-<ul>
-    <li>
-        <a href="../Events/Index">Events</a>
-    </li>
+@if (User.IsInRole("admin"))
+{
+    <hr/>
+    <h2 align="center">Панель администратора</h2>
+    <br/>
 
-    <li>
-        <a href="../Employees/Index">Employees</a>
-    </li>
+    <div class="row">
+        <div class="col-md-3">
+            <ul>
+                <li>
+                    <a href="../Events/Index">Мероприятия</a>
+                </li>
 
-    <li>
-        <a href="../Groups/Index">Groups</a>
-    </li>
+                <li>
+                    <a href="../Employees/Index">Работники</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="col-md-3">
+            <ul>
+                <li>
+                    <a href="../Groups/Index">Отделы</a>
+                </li>
 
-    <li>
-        <a href="../Positions/Index">Positions</a>
-    </li>
+                <li>
+                    <a href="../Positions/Index">Должности</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="col-md-3">
+            <ul>
+                <li>
+                    <a href="../FullNames/Index">ФИО</a>
+                </li>
 
-    <li>
-        <a href="../FullNames/Index">Groups</a>
-    </li>
+                <li>
+                    <a href="../EventRewards/Index">Награды мероприятий</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="col-md-3">
+            <ul>
+                <li>
+                    <a href="../IssuedRewards/Index">Выданные награды</a>
+                </li>
 
-    <li>
-        <a href="../EventRewards/Index">EventRewards</a>
-    </li>
-
-    <li>
-        <a href="../IssuedRewards/Index">IssuedRewards</a>
-    </li>
-
-    <li>
-        <a href="../Rewards/Index">Rewards</a>
-    </li>
-</ul>
+                <li>
+                    <a href="../Rewards/Index">Награды</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+}

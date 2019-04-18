@@ -1,30 +1,32 @@
 ﻿@model IEnumerable<EventPlanning.Mvc.Models.Entities.Event>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Мероприятия";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Мероприятия</h2>
+@if (User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Создать новое мероприятие", "Create")
+    </p>
+}
 
 @using (Html.BeginForm("Index", "Events", FormMethod.Get))
 {
 
     <p>
 
-        @Html.DropDownList("Category", (SelectList)ViewBag.Category, "All", new { @class = "form-control"})
-        <input type="submit" value="Filter" />
+        @Html.DropDownList("Category", (SelectList)ViewBag.Category, "All", new { @class = "form-control" })
+        <input type="submit" value="Фильровать" />
     </p>
 
-    <p>
-        Sort by: @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
-        | @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.CategorySortParm, currentFilter = ViewBag.CurrentFilter })
-        | @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.CostSortParm, currentFilter = ViewBag.CurrentFilter })
+    @*@<p>
+        Сортировать по: @Html.ActionLink("Имени", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        | @Html.ActionLink("Категории", "Index", new { sortOrder = ViewBag.CategorySortParm, currentFilter = ViewBag.CurrentFilter })
+        | @Html.ActionLink("Дате", "Index", new { sortOrder = ViewBag.CostSortParm, currentFilter = ViewBag.CurrentFilter })
 
-    </p>
+    </p>*@
 
 }
 
@@ -42,36 +44,37 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    if (item.EventVisible == false && !User.IsInRole("admin"))
+    @foreach (var item in Model)
     {
-        continue;
+        if (item.EventVisible == false && !User.IsInRole("admin"))
+        {
+            continue;
+        }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatEventType)
+            </td>
+            @if (User.IsInRole("admin"))
+            {
+                <td>
+                    @Html.ActionLink("Редактирование", "Edit", new { id = item.EventId }) |
+                    @Html.ActionLink("Подробнее", "Details", new { id = item.EventId }) |
+                    @Html.ActionLink("Удаление", "Delete", new { id = item.EventId })
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Подробнее", "Details", new { id = item.EventId })
+                </td>
+            }
+        </tr>
     }
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.EventTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EventDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RepeatEventType)
-        </td>
-        @if (User.IsInRole("admin"))
-        {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.EventId}) |
-                @Html.ActionLink("Details", "Details", new {id = item.EventId}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.EventId})
-            </td>
-        }
-        else
-        {
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.EventId })
-            </td>
-        }
-    </tr>
-}
 
 </table>
